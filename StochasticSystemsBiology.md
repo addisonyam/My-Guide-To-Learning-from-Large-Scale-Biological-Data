@@ -3,7 +3,7 @@
 ### Wednesday February 4, 2026
 Look at a direct view of the cell and what is happening
 
-**Single-Cell RNA Sequencing**r
+**Single-Cell RNA Sequencing**
 Video talked about getting the gene x cell matrix from this and today's we're looking at this data and studying the mechanisms that generated this data.
 
 What does our data even look like
