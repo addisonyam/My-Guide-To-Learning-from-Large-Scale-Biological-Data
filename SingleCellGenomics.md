@@ -3,20 +3,24 @@
 ### Monday February 2, 2026
 We'll be delving into the common pitfalls of mahcine learning in gneomics, scenairos of this and how to circumvent these setbacks. 
 
-**Quantification Through High Throughput Sequencing**
-Biollogical information is sequenced through a mahcine and then analyzed. 
+#### Quantification Through High Throughput Sequencing
+![alt text](/My-Guide-To-Learning-from-Large-Scale-Biological-Data//Pictures/02_SingleCellGenomics/HighThroughputSequencing.png)
+- Biollogical information is sequenced through a mahcine and then analyzed. 
 - It has to be annotated and aligned. Once you've performed alignment, perform quanitification to see level of expression. You'll get a vector and some number of how expressed the gene was in the sample. 
 
-Single-cell Genomics
+#### Single-cell Genomics
+![alt text](SingleCell.png)
 - When you're sample is one cell. In 2009 saw all the expression of one cell. 
-- slowlly over time the technology has really progressed over time
+- Slowlly over time the technology has really progressed over time
 
-Pipeline
+#### Single-cell Genomics - Pipeline
+![alt text](SingleCell2.png)
 take timor sample, all all individual cell, get the reads with barcodes so you get the read counts --> be able to see how many genes came from that cell. theres a limit to the number of reads that are counted. not able to see every gene from every cell. There's analyses to do this. 
 - It can be hard to see data in 20 dimensions. PCA helps this by decreasing the amount of dimensions in a lower feature space. PCA is a linear transform but it isn't the most helpful for this as there isn't a non-linear 
 - here we'll look into techniques for non-linear dimensionality reduction to help learn from our cells
 
-**Non-linear dimensionality reduction**
+#### The "Art" of Single-cell Genomics - Non-linear Dimensionality Reduction
+![alt text](DimensionReduction.png)
 UMAP - reduced to 2 dimension. What ddo people usually look at: clustering. You expect space in between the cluster and label the clusters and see how they relate to each other. You'll see today's lecture, there's way to extract this information and ways you can't learn about the cells 
 
 4 applications - things that are usually looked at.
@@ -30,21 +34,22 @@ There needs to be a seubset of proprties wen these features are generated. When 
 
 We will go thorugh this chart 
 
-**Local Distortion**
+#### Embeddings Distort Data - Local Distortion
 few embeddings create local distortions. 
 - first graph - run PCA as soon as possible, t-SNE and UMAP reduced in two dimensions
 x axic jaccard distance between neighbors that are similiar. you want low numbers
 - in the UMAP and t-SNE, we see the neighbors don't seem close at all --> shows distortion immeaditely about the nearest neighbors.
 
-**Global Distorion**
+#### Embeddings Distort Data - Global Distortion
 we're going to look at how cells in one cluster in nearby clusters.
 - looking at nearby, the diifferences aren't even there
 
-**Distance** took triplets of cell that are all equa-distance vs. near and vs far and saw how these triplets saw in UMAP. Space is not conserved at all. No information is captured of these triplets of equal size. 
+#### Embeddings Distort Data - Distance Distortion 
+- took triplets of cell that are all equa-distance vs. near and vs far and saw how these triplets saw in UMAP. Space is not conserved at all. No information is captured of these triplets of equal size. 
 
 Shows: compressig isn't conserving neighbor information, global information, distance isn't captured
 
-**Modality**
+#### Modality-Mixing, Integration, and Reference Mapping
 - first mistake people make. they may perform batch correction and integrate the data. if perfectly batch corrected should be 0.5, half the data came from one half and other.
     - umap orange: take the nearest neighbors are misleading and isn't fully captured
 
@@ -54,24 +59,24 @@ next two graphs - run code for batch correction
 
 examples show not to trust when performing batch corrected even though the umap looks great.
 
-**Cluster**
-scientist may infer this cluster is either close or far.
+#### Cluster Validation and Relationships
+$scientist may infer this cluster is either close or far.
 - accuracy drops of what is predicted vs. actual
 - 10 vectors: umap shows no separation. Ambient shows actual separation
 
-**Density**
+#### Density-based Visuals and Marker Analysis
 They may claim they can look at the density of things and get meanings, for exmaple justify changes
 - look at the density of cells between condition 1 and 2. May infer there is equal density for two and different density for three, claim difference in conditions. 
 - if you replot the umap and change perameters, relationship 3 now looks the same densitiy and different density for relatoonship two
 
-**Trajectoy** 
-May imply pseduo time or the progression of cells over time. here are four different ways to embed data. by looking at the neighbors, predict the flow neighbors. Each has its own completely different relatiionships. Changing the parameters, you see different directions and different groups. create distortions of tracking in space.
+#### Trajectory Inference and Continous Relationships
+- May imply pseduo time or the progression of cells over time. here are four different ways to embed data. by looking at the neighbors, predict the flow neighbors. Each has its own completely different relatiionships. Changing the parameters, you see different directions and different groups. create distortions of tracking in space.
 
 Look into chari and pachter
 
-**Picasso** https://github.com/pachterlab/picasso
+#### The "Art" of Single-cell  Genomics[Picasso](https://github.com/pachterlab/picasso)
 
-Keeps shape in mind
+- Keeps shape in mind
 - keep in mind an elephant. if you check how well it is corelated, it actually performs better than t-SNE and UMAP. The genometry that comes from low embeddings isn't actually meanigful
 
 This is all just to say, UMAP and t-SNE are performed and it is common to make assumptions for 2 dimensional data. 
