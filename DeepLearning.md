@@ -1,0 +1,47 @@
+## Week 6: Deep Learning-based sequence models
+### Learning from Large-Scale Biological Data
+### Week 6 - Monday March 2, 2026
+
+### Learning from Sequence
+- set up the key idea
+- the idea someone had is we have all this sequence data and their context and measurements such as gene expression. Why can't we build a non-linear model from the sequence to gene expression as well as other data such as chromatin profiling and 3D interactions. 
+- why might that be useful? All of us have the same sequence and why do we want to predict the differences?
+- There are extremely powerful technologies. One is predicting the effect of variants, by learning the change to sequence how does it affect gene expression in cancers or diseases. We might have variance at specific positions and feed that new sequence into the model and see how each measurement changes. Turns out to be pretty useful. 
+
+### Learning from Sequence
+- How might we learn from sequence? We have a large amount of experimental data with labels, any genome-wide per-base measurement experiment. We have sequence and data with labels that is measured throughout the genome, but gene expression isn't directly measured, there isn't a clear way to do it. Let's look at modalities that measure per-base that can be used. As long as you have this sequence and data that can still be used for deep learning. 
+1. Encode the data through one-hot encoding - turn the sequence and bases into a set of vectors where if there is that base, then there'll be a 1 in the vector. Once we've got this, you can feed into a learning machine. The big breakthrough that made this possible is CNN. 
+2. Train a model the data and labels - Convolution Neural Networks is spatially aware (understanding the space between bases) and frequently used (in computer vision) so already well studies and optimized. There's a window of data that is being passed from one layer to the next smaller-window layer. How do we do our cross-validation split? Usually chromosome split testing, which is what sequence-based models do. Train, Test, and Validate on separate chromosomes. 
+### Predicting Epigenetics From Sequence
+- One of the first deep learning models in 2015 - we have genome-wide sequencing data to train DeepSEA. 
+- The input is genomic sequences of 1000 bp windows (due to computational power) - one hot encoded and predict several markers and chromatin profiles. So they needed hundreds of experiments for epigenetic data across many cell lines, tissues, etc. ENCODE and Roadmap were one of the largest databases of cell lines at that time.
+- The entire model architectute showing the convolutional neural layers. Today coding this would probably take 5 minutes. They did some drop out and regularization of course when going to the next layers. What's the point? 
+### Predicting Epigenetics From Sequence
+- What happens now once we feed it articifical data? Can we make out-of-distribution predictions? You'll see most signal marks are pretty stable, but you might run into problems if you feed too many labels and variation at once. Once you run predictions of ouput, you can check the tracks and specific chromatin profile and see the overall change and effect. The model works pretty well, they get pretty good overall changes and downstream effects to the signal. To validate this, they took known cancer mutations' variants and profiles. This is a pretty common method now called in silicio mutageneisis
+### *In silico* Mutagenesis 
+- In silico means in chip or in computer. They theorize if you mutate the bases one at a time, you can create a feature relevance map, and see dense regions and produce potential sequence motif. In deep learning this is called forward propogation. 
+### Predicting Gene Expression from Sequence
+- How do they predict gene expression with data? 
+- Idea 1 - Break it down into two stages. Stage 1. - learn the epigenetic profiles. Stage 2 is learn how the epigenetic features map to the genetic expression. They considered the TSS and predicted all epigenetic features upstream and downstream 40KB (back in 2018). They took this data and compressed the data into a feature space matrix where you assume the bp closer to TSS are more important and stronger than the farther away (basically by averaging and scaling based on distance). They take this and feed it into a refularized linear model which may capture higher order interactions. Now you can introduce variants at the beginning to make expression predictions and mutation expression effect predicitons. One really nice feature. 
+- The two stage prrocess easily extends to cell-type specific interactions. Same exact encoding, the keep difference is instead of model learning per tissue it is per cell-type without much extra work.
+### Predicting Gene Expression from Sequence
+- Idea 2 - Learn epigenetic profiles and expression together. This isn't possible with regular gene expression experiments. 
+- The secret sauce is CAGE-seq - gets the amount of transcripts created and what is happening genome wide. 
+- This is a genome track map of base position at x-axis and how expressed a gene is on the y-axis --> get the gene expression at TSS resolution. Could've integrated the mRNA data with DNA data but you wouldn't the full resolution of what is happening. 
+- Generally, there is acetylation of a histone near the area of gene expression. Feed this CAGE-seq data into a deep learning model. The downside of CAGE-seq is how expensive and something else. The deep learning literature at the time introduced saliency maps. Instead of seeing how a sequence variant affects expression, you go the oppositie direction and create a gradient and saliency map of the node/base and see that node/base's saliency to see how important one nucleotide is at a specific location. You're able to search for motifs. In principal, they have plotted the saliency (gradient) at each nucleotide amd looking at each combination of nucleotide and see dense regions of importance. Paper is important of introducing saliceny maps. 
+- What is the biggest breakthrough in deep learning in recent years? Transformers. Aren't sequences more like a natural language than layers and images? Move from CNNs to Transformers in 2021. They have sequence-based attentioin mapping mechanism. Biggest thing in NPL was how well transformers were already studied. Won't get into transformers too much. You want to learn the attention (how relevant each word in a sentence is). There's query, keyhead and value in a model, then feed into a second model and feed the query head into the same information of the key head and get a prediction of the query. Think of like feeding thousands of words to predict sentences and see how these V/K/Q change. This is great for biology, the bases are basically words and the sequences are sentences. It's important to combine beature embedding with positional encoding for input as location is something we want to maintain. 
+- Why is this important for this context? Transformers can have several views to this. 
+- Image on right shows an Enformer - one of the first sequence-based transformer and got a large range of field/view and got base-resolved predictions. It's learning the attention of certain windows. We don't care the most about the best highest prediction, attention helps with understadning the mechanism. 
+### Attention is Interpretable
+- Attention is important for understanding the mechanisms of the sequence. We can pull the attention layer out and see how much attention each base has. To see how powerful it is, plot the positions and you're able to see the peaks and compare to saliency maps and get windows of attention. The attention layer is a lot less noisy of true signal of enhancers and it is learnig the non-coding genome that is affect the coding, learning the regulatory network and mechanisms. 
+### Other Recent Methods
+- Recent developments important for our future are 
+- Fine tuning to the specifc context such as coding or sequence. This context can be fine tunned to transformed. Variformer is a enformer for personal genomes. First take enformer and learn as much as we can, but at the end, we can fine tune it to the individual based on what we know about the individual. This is able to make more accurate predictions to the individual. 
+- Scaling up as computing power has grown significantly. AlphaGenome is the leading AI tool, they fed 1MB windows. They're trying to collect data with as many species as they can. 
+- Other modalities - how can we use learning from sequence and utilize in other modalities. In 2020, can we measure higher dimensions? Hi-C data is 2D and sees how this information interacts with each other. STARR-seq is able to see the same enhancer's activity in different contexts. The background model is something important to keep in mind as usually models consider the positives but the negatives are harder to consider and are more neglected. 
+### So Many Methods
+- In general, there's a whole world of models that take sequence-based daat and through various computational archeticures to make predictions. But, it's important to keep in mind interpretablity. 
+# Reading/Viewing for Spring Break
+[Large Languae Nodels in Computational Biology - A Primer by Jian Mu - Mini Quiz. ](https://www.youtube.com/watch?v=aBWJomCzkok)
+
+Things to explore more - alpha genome and forward propagration
