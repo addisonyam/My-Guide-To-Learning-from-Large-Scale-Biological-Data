@@ -42,6 +42,6 @@
 ### So Many Methods
 - In general, there's a whole world of models that take sequence-based daat and through various computational archeticures to make predictions. But, it's important to keep in mind interpretablity. 
 # Reading/Viewing for Spring Break
-[Large Languae Nodels in Computational Biology - A Primer by Jian Mu - Mini Quiz. ](https://www.youtube.com/watch?v=aBWJomCzkok)
+[Large Languae Models in Computational Biology - A Primer by Jian Mu - Mini Quiz. ](https://www.youtube.com/watch?v=aBWJomCzkok)
 
 Things to explore more - alpha genome and forward propagration
