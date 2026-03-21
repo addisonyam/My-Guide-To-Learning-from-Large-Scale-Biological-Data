@@ -78,6 +78,11 @@
 - Does it integrate prior knowledge?
 - Agentic AI
 
-Presentation paper
+Presentation paper scGPT
 
 Two mini-quizzes
+
+- Monday:
+[Evaluating the advancements in protein language models for encoding strategies in protein function prediction: a comprehensive review](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1506508/full)
+- Wednesday: [From sequencing data to gene functions: co-functional network approaches](https://www.tandfonline.com/doi/full/10.1080/19768354.2017.1284156#abstract)
+
